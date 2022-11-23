@@ -6,20 +6,34 @@ import BreezeButton from "@/Components/PrimaryButton.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { useForm } from '@inertiajs/inertia-vue3';
+import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable';
 const props = defineProps({
     servis: {
         type: Object,
         default: () => ({}),
     },
 });
-const form = useForm();
 
+const form = useForm();
 function destroy(id) {
     if (confirm("Usted realmente quiere eliminar el servicio?")) {
         form.delete(route('servis.destroy', id));
     }
 }
+function savepdf(){
+    const pdf = new jsPDF();
+    autoTable(pdf, {
+  head: [['Name', 'Email', 'Country',document.getElementById('1')]],
+  body: [
+    ['David', 'david@example.com', 'Sweden'],
+    ['Castille', 'castille@example.com', 'Spain'],
+    // ...
+  ],
+});
+      pdf.save("pdf.pdf");
 
+      }
 </script>
 
 <template>
@@ -43,15 +57,16 @@ function destroy(id) {
                             </Link>
 
                         </div>
-                        <div class="mb-4 text-right">
-
+                        <div class="mb-4">
+                <BreezeButton @click="savepdf()">PDF</BreezeButton>
+  
                         </div>
-                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                  
+                        <div class="relative overflow-x-auto shadow-md sm:rounded-lg" >
                             <table class="w-full text-sm text-left text-gray-500 dark:text-blue-300" id="table">
                                 <thead class="text-xs text-gray-500 uppercase bg-gray-80  dark:text-gray-400 border-b">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3">#</th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th scope="col" class="px-6 py-3" id="1">
                                             Servicio
                                         </th>
                                         <th scope="col" class="px-6 py-3">
@@ -89,16 +104,13 @@ function destroy(id) {
                                 <tbody>
                                     <tr v-for="servi in servis" :key="servi.id"
                                         class="bg-gray-800 border-b  dark:border-gray-700">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-00 dark:text-white whitespace-nowrap">
-                                            {{ servi.id }}
-                                        </th>
+ 
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                                             {{ servi.Nombre_Servicio }}
                                         </th>
                                         <td class="px-6 py-4">
-                                            {{ servi.empresID }}
+                                            {{ servi.Nombre_emp }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ servi.Fecha }}
