@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use App\Models\Servi;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class ServiController extends Controller
 {
@@ -23,11 +25,12 @@ class ServiController extends Controller
             ]
         );
     }
-    public function res(){
-        $servis = Servi::all();
-        return response()->json($servis,200,[]);
+    public function export(){
+        $servis = DB::select("CALL serv()");
+        $pdf = SnappyPdf::loadView('pdf.pdf',['servis'=>$servis]);
+        return $pdf->download('articulos.pdf');
     }
-
+   
     /**
      * Show the form for creating a new resource.
      *

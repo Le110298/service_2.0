@@ -26,10 +26,10 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <GuestLayout class="bg-slate-400">
         <Head title="Inicio de Sesion" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 font-medium text-sm">
             {{ status }}
         </div>
 

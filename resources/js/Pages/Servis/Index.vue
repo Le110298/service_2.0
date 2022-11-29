@@ -6,8 +6,11 @@ import BreezeButton from "@/Components/PrimaryButton.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { useForm } from '@inertiajs/inertia-vue3';
-import { jsPDF } from "jspdf";
-import autoTable from 'jspdf-autotable';
+import DataTable from 'datatables.net-vue3'
+import DataTablesLib from 'datatables.net';
+ 
+DataTable.use(DataTablesLib);
+
 const props = defineProps({
     servis: {
         type: Object,
@@ -22,16 +25,7 @@ function destroy(id) {
     }
 }
 function savepdf(){
-    const pdf = new jsPDF();
-    autoTable(pdf, {
-  head: [['Name', 'Email', 'Country',document.getElementById('1')]],
-  body: [
-    ['David', 'david@example.com', 'Sweden'],
-    ['Castille', 'castille@example.com', 'Spain'],
-    // ...
-  ],
-});
-      pdf.save("pdf.pdf");
+    window.open('/pdf/pdf','_blank')
 
       }
 </script>
@@ -47,7 +41,7 @@ function savepdf(){
             </h2>
         </template>
 
-        <div class="py-12">
+        <div class="py-12 bg-slate-400" >
             <div class="mx-auto max-w-8xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
@@ -55,15 +49,12 @@ function savepdf(){
                             <Link :href="route('servis.create')">
                             <BreezeButton>Agregar Servicios</BreezeButton>
                             </Link>
-
-                        </div>
-                        <div class="mb-4">
-                <BreezeButton @click="savepdf()">PDF</BreezeButton>
   
                         </div>
+                       
                   
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg" >
-                            <table class="w-full text-sm text-left text-gray-500 dark:text-blue-300" id="table">
+                            <DataTable class="w-full text-sm text-left text-gray-500 dark:text-gray-400" id="table">
                                 <thead class="text-xs text-gray-500 uppercase bg-gray-80  dark:text-gray-400 border-b">
                                     <tr>
                                         <th scope="col" class="px-6 py-3" id="1">
@@ -103,7 +94,7 @@ function savepdf(){
                                 </thead>
                                 <tbody>
                                     <tr v-for="servi in servis" :key="servi.id"
-                                        class="bg-gray-800 border-b  dark:border-gray-700">
+                                        class="bg-white border-b  dark:border-gray-700">
  
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
@@ -148,7 +139,12 @@ function savepdf(){
                                         </td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </DataTable>
+                            <div class="mb-4 text-right">
+                          
+                          <BreezeButton class="bg-red-700"  @click="savepdf()">Generar PDF</BreezeButton>
+                         
+                                  </div>
                         </div>
                     </div>
                 </div>
