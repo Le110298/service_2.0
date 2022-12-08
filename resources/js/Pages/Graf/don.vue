@@ -15,11 +15,11 @@
       components: { DoughnutChart },
       setup() {
         const testData = {
-          labels: ['Alejandra', 'Pedro', 'Jaime', 'Rud', 'Auture'],
+          labels: ['mesero 1', 'mesero 2', 'mesero 3', 'mesero 4',],
           datasets: [
             {
               label: 'Cantidad de Servicios',
-              data: [30, 40, 60, 70, 5],
+              data: [5, 0, 4, 0],
               backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
             },
           ],

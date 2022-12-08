@@ -101,7 +101,7 @@ class EmpreController extends Controller
         $empre->Nombre_emp = $request->Nombre_emp;
         $empre->dir_emp = $request->dir_emp;
         $empre-> direc_emp = $request->direc_emp;
-        $empre-> rfc = $request->dir_emp;
+        $empre-> rfc = $request->rfc;
         $empre->tel = $request->tel;
         $empre->save();
         sleep(1);

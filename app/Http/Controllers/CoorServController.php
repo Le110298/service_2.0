@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Coor_serv;
+use App\Models\Servi;
+use App\Models\Empl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class CoorServController extends Controller
@@ -32,8 +34,15 @@ class CoorServController extends Controller
      */
     public function create()
     {
+        $servis= Servi::all();
+        $empls = Empl::all();
         return Inertia::render(
-            'Coor_servs/Create'
+            'Coor_servs/Create',
+            [
+            'servis'=>$servis,
+            'empls' => $empls
+
+            ]
         );
     }
 
@@ -48,11 +57,13 @@ class CoorServController extends Controller
         $request->validate([
             'serv_id' => 'required',
             'empl_id' => 'required',
+            'turn' => 'required',
             'val_asig' => 'required'
     ]);
     Coor_serv::create([
         'serv_id' => $request->serv_id,
         'empl_id' => $request->empl_id,
+        'turn' => $request->turn,
         'val_asig' => $request->val_asig
        
     ]);
@@ -79,10 +90,14 @@ class CoorServController extends Controller
      */
     public function edit(Coor_serv $coor_serv)
     {
+        $servis= Servi::all();
+        $empls = Empl::all();
         return Inertia::render(
             'Coor_servs/Edit',
             [
-                'coor_serv' => $coor_serv
+                'coor_serv' => $coor_serv,
+                'servis'=>$servis,
+                'empls' => $empls
             ]
         );
     }
@@ -99,10 +114,12 @@ class CoorServController extends Controller
         $request->validate([
             'serv_id' => 'required',
             'empl_id' => 'required',
+            'turn' => 'required',
             'val_asig' => 'required'
         ]);
         $coor_serv->serv_id = $request->serv_id;
         $coor_serv->empl_id = $request->empl_id;
+        $coor_serv->turn = $request->turn;
         $coor_serv-> val_asig = $request->val_asig;
         $coor_serv->save();
         sleep(1);

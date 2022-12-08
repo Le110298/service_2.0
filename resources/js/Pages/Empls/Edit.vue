@@ -29,8 +29,8 @@
 
         <BreezeAuthenticatedLayout>
             <template #header>
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    Empl Edit
+                <h2 class="text-xl font-semibold leading-tight text-black-800 text-center">
+                    Editar Enpleados
                 </h2>
             </template>
 
@@ -66,9 +66,10 @@
                                         >Telefono</label
                                     >
                                     <input
-                                        type="text"
+                                        type="num"
                                         v-model="form.tel"
                                         name="tel"
+                                        autocomplete="off" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />

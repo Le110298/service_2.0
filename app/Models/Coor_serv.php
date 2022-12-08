@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Coor_serv extends Model
 {
     use HasFactory;
-    protected $fillable = ['serv_id','empl_id','val_asig'];
+    protected $fillable = ['serv_id','empl_id','turn','val_asig'];
 }

@@ -12,9 +12,5 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-    dd('Emp');
-    $this->call(Emp::class);
-    }
+  
 }

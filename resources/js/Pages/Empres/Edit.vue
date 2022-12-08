@@ -32,8 +32,8 @@
 
         <BreezeAuthenticatedLayout>
             <template #header>
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    Empl Edit
+                <h2 class="text-xl font-semibold leading-tight text-black-800 text-center">
+                    Editar Empresa
                 </h2>
             </template>
 
@@ -124,6 +124,7 @@
                                 <div class="mb-6">
                                     <label
                                         for="tel"
+                                        
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         >Telefono</label
                                     >
@@ -131,6 +132,7 @@
                                         type="tel"
                                         v-model="form.tel"
                                         name="tel"
+                                        autocomplete="off" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />

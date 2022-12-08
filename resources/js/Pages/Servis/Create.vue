@@ -5,8 +5,13 @@ import BreezeButton from "@/Components/PrimaryButton.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { useForm } from "@inertiajs/inertia-vue3";
 
+
 const props = defineProps({
     servis: {
+        type: Object,
+        default: () => ({}),
+    },
+    empres: {
         type: Object,
         default: () => ({}),
     },
@@ -17,7 +22,7 @@ const form = useForm({
     Nombre_Servicio: '',
     empresID: '',
     Fecha: '',
-    Hora: '',
+    Hora: '',   
     Ubicacion: '',
     Encargado: '',
     Cantida_Meseros: '',
@@ -36,20 +41,21 @@ const submit = () => {
 
     <BreezeAuthenticatedLayout>
         <template #header>
-                            <Link :href="route('servis.index')">
-                            <BreezeButton>Regresar</BreezeButton>
-                            </Link>
-                            <h2 class="text-3xl font-semibold leading-tight text-black-800 text-center">
+            <Link :href="route('servis.index')">
+            <BreezeButton>Regresar</BreezeButton>
+            </Link>
+            <h2 class="text-3xl font-semibold leading-tight text-black-800 text-center">
                 Crear servicio
+                {{props.empres.id}}
             </h2>
-                      
+
         </template>
-    
+
         <div class="py-12">
             <div class="mx-auto max-w-2xl sm:px-6 lg:px-4">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-4 bg-white border-b border-gray-200">
-                     
+
                         <form @submit.prevent="submit">
                             <div class="mb-6">
                                 <label for="nombre"
@@ -64,11 +70,12 @@ const submit = () => {
                             <div class="mb-6">
                                 <label for="empresa"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-blue-700">Empresa</label>
-                                <input type="num" v-model="form.empresID" name="empresa"
-                                    class="form-input rounded text-blue-500 block w-full p-2.5" placeholder="" />
-                                <div v-if="form.errors.empresID" class="text-sm text-red-600">
-                                    {{ form.errors.empresID }}
-                                </div>
+                                <select 
+                                v-model="form.empresID" 
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected>Elija la empresa</option>
+                                    <option v-for="empre in empres" :key="empre.id" :value="empre.id">{{empre.Nombre_emp}}</option>
+                                </select>
                             </div>
                             <div class="mb-6">
                                 <label for="fech"
@@ -110,7 +117,8 @@ const submit = () => {
                                 <label for="cant_mes"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-blue-700">Cantidad de
                                     meseros</label>
-                                <input type="number" v-model="form.Cantida_Meseros" name="cant_mes"
+                                <input type="num" v-model="form.Cantida_Meseros" name="cant_mes" autocomplete="off"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
                                     class="form-input rounded text-blue-500 block w-full p-2.5" placeholder="" />
                                 <div v-if="form.errors.Cantida_Meseros" class="text-sm text-red-600">
                                     {{ form.errors.Cantida_Meseros }}
@@ -120,7 +128,8 @@ const submit = () => {
                                 <label for="pres"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-blue-700">Precio (sin
                                     simbolo)</label>
-                                <input type="number" v-model="form.Precio" name="pres"
+                                <input type="num" v-model="form.Precio" name="pres" autocomplete="off"
+                                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
                                     class="form-input rounded text-blue-500 block w-full p-2.5" placeholder="" />
                                 <div v-if="form.errors.Precio" class="text-sm text-red-600">
                                     {{ form.errors.Precio }}

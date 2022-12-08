@@ -6,31 +6,41 @@
     import { useForm } from "@inertiajs/inertia-vue3";
 
     const props = defineProps({
-        empl: {
+        coor_serv: {
             type: Object,
             default: () => ({}),
         },
+        servis: {
+        type: Object,
+        default: () => ({}),
+    },
+        empls: {
+        type: Object,
+        default: () => ({}),
+    },
     });
 
     const form = useForm({
-        id: props.empl.id,
-        nombre: props.empl.nombre,
-        tel: props.empl.tel,
+        id: props.coor_serv.id,
+        serv_id: props.coor_serv.serv_id,
+        empl_id: props.coor_serv.empl_id,
+        turn: props.coor_serv.turn,
+        val_asig: props.coor_serv.val_asig,
     });
 
 
     const submit = () => {
-        form.put(route("empls.update", props.empl.id));
+        form.put(route("coor_servs.update", props.coor_serv.id));
     };
     </script>
 
     <template>
-        <Head title="Empl Edit" />
+        <Head title="coor_serv Edit" />
 
         <BreezeAuthenticatedLayout>
             <template #header>
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    Empl Edit
+                <h2 class="text-xl font-semibold leading-tight text-black-800 text-center">
+                    Editar Asignacion
                 </h2>
             </template>
 
@@ -43,41 +53,79 @@
                                     <label
                                         for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Nombre</label
+                                        >Servicio</label
                                     >
-                                    <input
-                                        type="text"
-                                        v-model="form.nombre"
-                                        name="nombre"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder=""
-                                    />
+                                    <select 
+                                v-model="form.serv_id" 
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option v-for="servi in servis" :key="servi.id" :value="servi.id">{{servi.id}} {{servi.Nombre_Servicio}}</option>
+                                </select>
                                     <div
-                                        v-if="form.errors.nombre"
+                                        v-if="form.errors.serv_id"
                                         class="text-sm text-red-600"
                                     >
-                                        {{ form.errors.nombre }}
+                                        {{ form.errors.serv_id }}
                                     </div>
                                 </div>
                                 <div class="mb-6">
                                     <label
                                         for="tel"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Telefono</label
+                                        >Empleado</label
+                                    >
+                                    <select 
+                                v-model="form.empl_id" 
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option v-for="empl in empls" :key="empl.id" :value="empl.id">{{empl.nombre}}</option>
+                                </select>
+                                    <div
+                                        v-if="form.errors.empl_id"
+                                        class="text-sm text-red-600"
+                                    >
+                                        {{ form.errors.empl_id }}
+                                    </div>
+                                    <div class="mb-6">
+                                    <label
+                                        for="nombre"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                        >Turnos</label
                                     >
                                     <input
-                                        type="text"
-                                        v-model="form.tel"
-                                        name="tel"
+                                        type="num"
+                                        v-model="form.turn"
+                                        name="nombre"
+                                        autocomplete="off" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />
                                     <div
-                                        v-if="form.errors.tel"
+                                        v-if="form.errors.turn"
                                         class="text-sm text-red-600"
                                     >
-                                        {{ form.errors.tel }}
+                                        {{ form.errors.turn }}
                                     </div>
+                                </div>
+                                <div class="mb-6">
+                                    <label
+                                        for="nombre"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                        >   Valor Asignado</label
+                                    >
+                                    <input
+                                        type="num"
+                                        v-model="form.val_asig"
+                                        name="nombre"
+                                        autocomplete="off" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        placeholder=""
+                                    />
+                                    <div
+                                        v-if="form.errors.val_asig"
+                                        class="text-sm text-red-600"
+                                    >
+                                        {{ form.errors.val_asig }}
+                                    </div>
+                                </div>
                                 </div>
                                 
                                 <button

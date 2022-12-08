@@ -66,8 +66,9 @@
                                         >Telefono</label
                                     >
                                     <input
-                                        type="text"
+                                        type="num"
                                         v-model="form.tel"
+                                        autocomplete="off" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
                                         name="tel"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""

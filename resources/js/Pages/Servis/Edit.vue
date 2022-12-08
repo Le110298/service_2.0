@@ -10,19 +10,23 @@
             type: Object,
             default: () => ({}),
         },
+        empres: {
+        type: Object,
+        default: () => ({}),
+    },
     });
 
     const form = useForm({
         id: props.servi.id,
         Nombre_Servicio: props.servi.Nombre_Servicio,
+        empresID: props.servi.empresID,
         Fecha: props.servi.Fecha,
         Hora: props.servi.Hora,
         Ubicacion: props.servi.Ubicacion,
         Encargado: props.servi.Encargado,
         Cantida_Meseros: props.servi.Cantida_Meseros,
         Precio: props.servi.Precio,
-        Observaciones: props.servi.Observaciones
-
+        Observaciones: props.servi.Observaciones,
     });
 
 
@@ -32,12 +36,12 @@
     </script>
 
     <template>
-        <Head title="servi Edit" />
+        <Head title="coor_serv Edit" />
 
         <BreezeAuthenticatedLayout>
             <template #header>
-                <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                   Editar Servicios
+                <h2 class="text-xl font-semibold leading-tight text-black-800 text-center">
+                    Editar Servicio
                 </h2>
             </template>
 
@@ -50,7 +54,7 @@
                                     <label
                                         for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Nombre Servicio</label
+                                        >Nombre_Servicio</label
                                     >
                                     <input
                                         type="text"
@@ -68,14 +72,32 @@
                                 </div>
                                 <div class="mb-6">
                                     <label
-                                        for="fech"
+                                        for="tel"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                        >empresID</label
+                                    >
+                                    <select 
+                                v-model="form.empresID" 
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option selected>Elija la empresa</option>
+                                    <option v-for="empre in empres" :key="empre.id" :value="empre.id">{{empre.Nombre_emp}}</option>
+                                </select>
+                                    <div
+                                        v-if="form.errors.empresID"
+                                        class="text-sm text-red-600"
+                                    >
+                                        {{ form.errors.empresID }}
+                                    </div>
+                                    <div class="mb-6">
+                                    <label
+                                        for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                                         >Fecha</label
                                     >
                                     <input
                                         type="date"
                                         v-model="form.Fecha"
-                                        name="fech"
+                                        name="nombre"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />
@@ -88,14 +110,14 @@
                                 </div>
                                 <div class="mb-6">
                                     <label
-                                        for="time"
+                                        for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Hora</label
+                                        >   Hora</label
                                     >
                                     <input
                                         type="time"
                                         v-model="form.Hora"
-                                        name="time"
+                                        name="nombre"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />
@@ -103,19 +125,19 @@
                                         v-if="form.errors.Hora"
                                         class="text-sm text-red-600"
                                     >
-                                        {{ form.errors.Hora}}
+                                        {{ form.errors.Hora }}
                                     </div>
                                 </div>
                                 <div class="mb-6">
                                     <label
-                                        for="ubic"
+                                        for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Ubicacion</label
+                                        >   Ubicacion</label
                                     >
                                     <input
                                         type="text"
                                         v-model="form.Ubicacion"
-                                        name="ubic"
+                                        name="nombre"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />
@@ -126,16 +148,17 @@
                                         {{ form.errors.Ubicacion }}
                                     </div>
                                 </div>
+
                                 <div class="mb-6">
                                     <label
-                                        for="enc"
+                                        for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Encargado</label
+                                        >   Encargado</label
                                     >
                                     <input
                                         type="text"
                                         v-model="form.Encargado"
-                                        name="enc"
+                                        name="nombre"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />
@@ -146,16 +169,17 @@
                                         {{ form.errors.Encargado }}
                                     </div>
                                 </div>
+
                                 <div class="mb-6">
                                     <label
-                                        for="cant_mes"
+                                        for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Cantidad de meseros</label
+                                        >   Cantida_Meseros</label
                                     >
                                     <input
-                                        type="number"
+                                        type="text"
                                         v-model="form.Cantida_Meseros"
-                                        name="cant_mes"
+                                        name="nombre"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />
@@ -166,16 +190,17 @@
                                         {{ form.errors.Cantida_Meseros }}
                                     </div>
                                 </div>
+
                                 <div class="mb-6">
                                     <label
-                                        for="pres"
+                                        for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Precio (sin simbolo)</label
+                                        >   Precio</label
                                     >
                                     <input
-                                        type="number"
+                                        type="num"
                                         v-model="form.Precio"
-                                        name="pres"
+                                        name="nombre"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         placeholder=""
                                     />
@@ -185,17 +210,21 @@
                                     >
                                         {{ form.errors.Precio }}
                                     </div>
-                                    <div class="mb-6">
+                                </div>
+
+                                <div class="mb-6">
                                     <label
-                                        for="obs"
+                                        for="nombre"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                        >Observaciones</label
+                                        >   Observaciones</label
                                     >
-                                    <textarea name="obs" cols="30" rows="10"
+                                    <input
+                                        type="text"
                                         v-model="form.Observaciones"
+                                        name="nombre"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="">
-                                    </textarea>
+                                        placeholder=""
+                                    />
                                     <div
                                         v-if="form.errors.Observaciones"
                                         class="text-sm text-red-600"
@@ -203,6 +232,9 @@
                                         {{ form.errors.Observaciones }}
                                     </div>
                                 </div>
+
+                               
+
                                 </div>
                                 
                                 <button

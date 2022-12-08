@@ -7,7 +7,7 @@
     import { useForm } from '@inertiajs/inertia-vue3'
     import DataTable from 'datatables.net-vue3'
 import DataTablesLib from 'datatables.net';
- 
+import html2pdf from 'html2pdf.js';
 DataTable.use(DataTablesLib);
 
     const props = defineProps({
@@ -23,6 +23,22 @@ DataTable.use(DataTablesLib);
             form.delete(route('empls.destroy', id));
         }
     }
+    function savepdf(){
+    var element = document.getElementById('es');
+var opt = {
+  margin:       1,
+  filename:     'empresa.pdf',
+  image:        { type: 'jpeg', quality: 0.98 },
+  html2canvas:  { scale: 2 },
+  jsPDF:        { unit: 'in', format: 'A4', orientation: 'landscape' }
+};
+// New Promise-based usage:
+html2pdf().set(opt).from(element).save();
+}
+
+function sal(){
+    window.open("http://localhost/pdf/pdi.php");
+}
     </script>
 
     <template>
@@ -38,27 +54,26 @@ DataTable.use(DataTablesLib);
 
             <div class="py-12 bg-slate-400">
                 <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <!-- <div
-                        v-if="$page.props.flash.message"
-                        class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-                        role="alert"
-                    >
-                        <span class="font-medium">
-                            {{ $page.props.flash.message }}
-                        </span>
-                    </div> -->
                     <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div class="p-6 bg-white border-b border-gray-200">
                            <div class="mb-2">
+                            <div class="mb-4 text-right">
+                          
+                          <BreezeButton class="bg-red-700"  @click="savepdf()">Generar PDF</BreezeButton>
+                          <BreezeButton class="bg-blue-700"  @click="sal()">Generar  Salario</BreezeButton>
+                         
+                                  </div>
                                 <Link :href="route('empls.create')">
                                     <BreezeButton>Agregar Empleados</BreezeButton></Link
                                 >
+                                
                             </div>
                              <div
                                 class="relative overflow-x-auto shadow-md sm:rounded-lg"
                             >
                                 <DataTable
                                     class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                                    id="es"
                                 >
                                     <thead
                                         class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"

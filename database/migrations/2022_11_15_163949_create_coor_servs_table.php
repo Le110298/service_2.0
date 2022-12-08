@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('serv_id')->unsigned();
             $table->bigInteger('empl_id')->unsigned();
+            $table->string('turn');
             $table->integer('val_asig');
             $table->timestamps();
            $table->foreign('serv_id')->references('id')->on('servis')->onDelete('cascade');

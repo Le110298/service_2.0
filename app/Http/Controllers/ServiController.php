@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Empre;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use App\Models\Servi;
-use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -25,11 +26,7 @@ class ServiController extends Controller
             ]
         );
     }
-    public function export(){
-        $servis = DB::select("CALL serv()");
-        $pdf = SnappyPdf::loadView('pdf.pdf',['servis'=>$servis]);
-        return $pdf->download('articulos.pdf');
-    }
+ 
    
     /**
      * Show the form for creating a new resource.
@@ -38,8 +35,12 @@ class ServiController extends Controller
      */
     public function create()
     {
+        $empres= Empre::all();
         return Inertia::render(
-            'Servis/Create'
+            'Servis/Create',
+            [
+            'empres'=>$empres
+            ]
         );
     }
 
@@ -95,10 +96,13 @@ class ServiController extends Controller
      */
     public function edit(Servi $servi)
     {
+        $empres= Empre::all();
         return Inertia::render(
             'Servis/Edit',
             [
-                'servi' => $servi
+                'servi' => $servi,
+                'empres'=>$empres
+                
             ]
         );
     }
@@ -120,10 +124,11 @@ class ServiController extends Controller
             'Ubicacion' => 'required',
             'Encargado' => 'required',
             'Cantida_Meseros' => 'required',
-            'Precio' => 'required'
+            'Precio' => 'required',
+           
         ]);
         $servi->Nombre_Servicio = $request->Nombre_Servicio;
-        $servi->empreID = $request->empresID;
+        $servi->empresID = $request->empresID;
         $servi->Fecha = $request->Fecha;
         $servi->Hora = $request->Hora;
         $servi->Ubicacion = $request->Ubicacion;
@@ -132,9 +137,9 @@ class ServiController extends Controller
         $servi->Precio = $request->Precio;
         $servi->Observaciones = $request->Observaciones;
         $servi->save();
-       
-        return redirect()->route('servis.index')->with('message','Servicio Actualizado');
         sleep(1);
+        return redirect()->route('servis.index')->with('message','Servicio Actualizado');
+       
     }
 
     /**
